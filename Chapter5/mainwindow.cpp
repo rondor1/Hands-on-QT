@@ -8,6 +8,8 @@
 
 #include <QTableWidgetItem>
 
+#include <QMessageBox>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -40,6 +42,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tableWidget->setItem(0,0, newTableWidgetItem);
     ui->tableWidget->setItem(1,1,
                              newTableWidgetItem2);
+
 }
 
 MainWindow::~MainWindow()
