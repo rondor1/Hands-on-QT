@@ -10,7 +10,6 @@ public:
     void initLine(QGraphicsItem* start, QGraphicsItem* end);
     void updateLine();
 
-private:
     QGraphicsItem* startBox;
     QGraphicsItem* endBox;
 };

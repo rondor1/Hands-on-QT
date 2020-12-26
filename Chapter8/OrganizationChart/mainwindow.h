@@ -5,6 +5,7 @@
 #include <QList>
 
 class QGraphicsScene;
+class QKeyEvent;
 class profileLine;
 
 QT_BEGIN_NAMESPACE
@@ -18,6 +19,8 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+    void keyReleaseEvent(QKeyEvent* event);
     void updateLines();
 
 private slots:

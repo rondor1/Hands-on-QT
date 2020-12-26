@@ -7,6 +7,8 @@
 #include <QGraphicsScene>
 #include <QInputDialog>
 
+#include <QKeyEvent>
+
 #include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -59,6 +61,31 @@ void MainWindow::AddNewProfile()
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::keyReleaseEvent(QKeyEvent *event)
+{
+    qDebug() << "Key released " << event->text();
+
+    if(event->key() == Qt::Key_Delete)
+    {
+        qDebug() << " Delete key pressed ";
+
+        QGraphicsItem* selected = scene->selectedItems().at(0);
+        scene->removeItem(selected);
+
+        for(int i =0; i < lines.size(); ++i)
+        {
+            profileLine* line = lines.at(i);
+            if(line->startBox == selected || line->endBox == selected)
+            {
+                lines.removeAt(i);
+                scene->removeItem(line);
+                delete line;
+            }
+        }
+        delete selected;
+    }
 }
 
 void MainWindow::updateLines()

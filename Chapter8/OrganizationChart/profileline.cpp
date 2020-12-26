@@ -15,7 +15,6 @@ void profileLine::initLine(QGraphicsItem *start, QGraphicsItem *end)
     this->startBox = start;
     this->endBox = end;
 
-
     //Update drawing
     updateLine();
 }
