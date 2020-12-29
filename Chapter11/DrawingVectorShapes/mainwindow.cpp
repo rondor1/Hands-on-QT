@@ -1,6 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QPainter>
+#include <QtSvg/QSvgGenerator>
+#include <QFileDialog>
+
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -16,10 +20,24 @@ MainWindow::~MainWindow()
 
 void MainWindow::paintEvent(QPaintEvent *event)
 {
+    Q_UNUSED(event);
+
+    paintAll();
+}
+
+void MainWindow::paintAll(QSvgGenerator *generator)
+{
     QPainter painter;
 
     //Start all painting activity
-    painter.begin(this);
+    if(generator)
+    {
+        painter.begin(generator);
+    }
+    else
+    {
+        painter.begin(this);
+    }
 
     //Draw A line
     painter.drawLine(QPoint(50, 60), QPoint(100,100));
@@ -55,6 +73,27 @@ void MainWindow::paintEvent(QPaintEvent *event)
 
     //End all painting activity
     painter.end();
-
 }
 
+
+void MainWindow::on_actionSave_as_SVG_triggered()
+{
+    QString filePath = QFileDialog::getSaveFileName(this, "Save SVG", "", "SVG files (*.svg)");
+
+    if(filePath.isEmpty())
+    {
+        return;
+    }
+
+    qDebug() << filePath;
+
+    //Create SVG generator and add all of the needed
+    //information for SVG file
+    QSvgGenerator svgGenerator;
+    svgGenerator.setFileName(filePath);
+    svgGenerator.setSize(QSize(this->width(), this->height()));
+    svgGenerator.setViewBox(QRect(0,0, this->width(), this->height()));
+    svgGenerator.setTitle("Svg example");
+    svgGenerator.setDescription("This is a SVG example file");
+    paintAll(&svgGenerator);
+}
