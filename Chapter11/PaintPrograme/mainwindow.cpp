@@ -92,11 +92,23 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
     }
 }
 
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+
+    QImage newImage(event->size(), QImage::Format_RGB32);
+    newImage.fill({255, 255, 255});
+
+    QPainter painter(&newImage);
+    painter.drawImage(QPoint(0,0), newImage);
+//    m_image = &newImage;
+
+}
+
 void MainWindow::saveSVG()
 {
     qDebug() << " Save clicked ";
     auto filePath = QFileDialog::getSaveFileName(this, "Save drawn image",
-                                                        "", "PNG (*.png);;JPEG (*.jpg *.jpeg);; All files (*.*)");
+                                                 "", "PNG (*.png);;JPEG (*.jpg *.jpeg);; All files (*.*)");
     if(filePath.isEmpty())
     {
         return;
